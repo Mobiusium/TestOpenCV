@@ -15,7 +15,7 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvPipeline;
 import org.openftc.easyopencv.OpenCvWebcam;
 
-@Autonomous
+@Autonomous(name="EasyOpenCV", group="Auto")
 public class OpenCVExample extends OpMode {
 
     OpenCvWebcam webcam1= null;
@@ -57,7 +57,7 @@ public class OpenCVExample extends OpMode {
         double leftavgfin;
         double rightavgfin;
         Mat outPut = new Mat();
-        Scalar rectColor = new Scalar(255.0, 0.0, 0.0);
+        Scalar rectColor = new Scalar(255.0, 255.0, 0.0);
 
 
         public Mat processFrame(Mat input){
@@ -75,8 +75,8 @@ public class OpenCVExample extends OpMode {
             leftCrop = YCbCr.submat(leftRect);
             rightCrop = YCbCr.submat(rightRect);
 
-            Core.extractChannel(leftCrop, leftCrop, 2);
-            Core.extractChannel(rightCrop, rightCrop, 2);
+            Core.extractChannel(leftCrop, leftCrop, 1);
+            Core.extractChannel(rightCrop, rightCrop, 1);
 
             Scalar leftavg = Core.mean(leftCrop);
             Scalar rightavg = Core.mean(rightCrop);
@@ -84,12 +84,22 @@ public class OpenCVExample extends OpMode {
             leftavgfin = leftavg.val[0];
             rightavgfin = rightavg.val[0];
 
-            if (leftavgfin > rightavgfin){
+            if(rightavgfin < 126.5 && leftavgfin < 126.5){
                 telemetry.addLine("Left");
+                telemetry.addData("left ",leftavgfin);
+                telemetry.addData("right ",rightavgfin);
             }
-            else{
+            else if (leftavgfin > rightavgfin){
+                telemetry.addLine("Center");
+                telemetry.addData("left", leftavgfin);
+                telemetry.addData("right", rightavgfin);
+            }
+            else if(rightavgfin > leftavgfin){
                 telemetry.addLine("Right");
+                telemetry.addData("left ",leftavgfin);
+                telemetry.addData("right ",rightavgfin);
             }
+
             return(outPut);
         }
     }
