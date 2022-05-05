@@ -126,7 +126,7 @@ public class NewAuto_BlueTop extends LinearOpMode {
         frontRightDrive.setDirection(DcMotor.Direction.FORWARD);
         rearRightDrive.setDirection(DcMotor.Direction.FORWARD);
 
-        TouchSensor limit = hardwareMap.get(TouchSensor.class, "limit");
+//        TouchSensor limit = hardwareMap.get(TouchSensor.class, "limit");
         // DcMotor motor = hardwareMap.get(DcMotor.class, "Motor");
 
         telemetry.update();
@@ -209,26 +209,32 @@ public class NewAuto_BlueTop extends LinearOpMode {
 
     //Where procedure is happening
     public void autoMoves(String position){
+        //Declare and Initiate a limit TouchSensor
+        TouchSensor limit = hardwareMap.get(TouchSensor.class, "limit");
         //                                 distance / speed * 1000
-        strafeRobot("right" , (long)(0.6/0.4*1000), 0.5);
+        strafeRobot("right" , 1500, 0.5);
 
         armToLevel(position);
 
-        driveRobot(0.5, (long)(0.6/0.5*1000));
+        driveRobot(0.5, 1100);
 
         intake.setPower(-1);
         sleep(3000);
         intake.setPower(0);
 
-        driveRobot(-0.5, (long)(0.6/0.5*1000));
+        driveRobot(-0.5, 1500);
 
         armMotor.setPower(-0.5);
-        sleep(500);
+        sleep(700);
         armMotor.setPower(0);
 
-        driveRobot(-0.5, 500);
+        strafeRobot("left", 4000, 0.5 );
 
-        strafeRobot("left", (long)(2/0.4*1000), 0.4 );
+        //arm down
+        while(!limit.isPressed()&&opModeIsActive()){
+            armMotor.setPower(0.5);
+        }
+        armMotor.setPower(0);
 
         sleep(10000);
         stop();
@@ -242,7 +248,7 @@ public class NewAuto_BlueTop extends LinearOpMode {
         }
         if(position.equals("B")){
             armMotor.setPower(-0.5);
-            sleep(1100);
+            sleep(1200);
             armMotor.setPower(0);
         }
         if(position.equals("C")){
@@ -345,7 +351,8 @@ public class NewAuto_BlueTop extends LinearOpMode {
         sleep(500);
     }
 
-    public double correction(double value, double inMin, double inMax, double outMin, double outMax) {
+    public double correction(double value, double inMin, double inMax,
+                             double outMin, double outMax) {
         return (value - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
     }
 

@@ -210,7 +210,10 @@ public class NewAuto_BlueBot extends LinearOpMode {
 
     //Where procedure is happening
     public void autoMoves(String position){
+        //Declare and Initiate a limit TouchSensor
         TouchSensor limit = hardwareMap.get(TouchSensor.class, "limit");
+
+
         strafeRobot("right",1200,0.5);
 
         spinner.setPower(-1);
@@ -241,6 +244,7 @@ public class NewAuto_BlueBot extends LinearOpMode {
         strafeRobot("left", 950,0.5);
 
 
+        //arm down
         while(!limit.isPressed()&&opModeIsActive()){
             armMotor.setPower(0.5);
         }
@@ -259,7 +263,7 @@ public class NewAuto_BlueBot extends LinearOpMode {
         }
         if(position.equals("B")){
             armMotor.setPower(-0.5);
-            sleep(1100);
+            sleep(1200);
             armMotor.setPower(0);
         }
         if(position.equals("C")){
@@ -362,7 +366,8 @@ public class NewAuto_BlueBot extends LinearOpMode {
         sleep(500);
     }
 
-    public double correction(double value, double inMin, double inMax, double outMin, double outMax) {
+    public double correction(double value, double inMin,
+                             double inMax, double outMin, double outMax) {
         return (value - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
     }
 
