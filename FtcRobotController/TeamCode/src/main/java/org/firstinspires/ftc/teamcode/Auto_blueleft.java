@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 
 @Autonomous(name="Auto blueLeft", group="Auto")
-//@Disabled
+@Disabled
 public class Auto_blueleft extends LinearOpMode {
 
     /* Declare OpMode members. */

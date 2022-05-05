@@ -63,7 +63,7 @@ public class MechanumDriveSimple extends LinearOpMode {
     private DcMotor spinner = null;
     private DcMotor armMotor = null;
     private CRServo intake = null;
-    private TouchSensor limitSwitch = null;
+    private TouchSensor limit = null;
 
     @Override
     public void runOpMode() {

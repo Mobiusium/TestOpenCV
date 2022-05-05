@@ -20,12 +20,11 @@ import org.opencv.core.Scalar;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
-import org.tensorflow.lite.task.core.vision.ImageProcessingOptions;
 
 @Config //Disable if not using FTC Dashboard https://github.com/PinkToTheFuture/OpenCV_FreightFrenzy_2021-2022#opencv_freightfrenzy_2021-2022
-@Autonomous(name="NewAuto", group="Auto")
+@Autonomous(name="NewAuto_BlueBot", group="Auto")
 
-public class NewAuto extends LinearOpMode {
+public class NewAuto_BlueBot extends LinearOpMode {
 
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
@@ -36,7 +35,7 @@ public class NewAuto extends LinearOpMode {
     private DcMotor spinner = null;
     private DcMotor armMotor = null;
     private CRServo intake = null;
-    private TouchSensor limitSwitch = null;
+    private TouchSensor limit = null;
 
     private OpenCvCamera webcam;
 
@@ -127,8 +126,9 @@ public class NewAuto extends LinearOpMode {
         frontRightDrive.setDirection(DcMotor.Direction.FORWARD);
         rearRightDrive.setDirection(DcMotor.Direction.FORWARD);
 
-        TouchSensor limit = hardwareMap.get(TouchSensor.class, "limit");
+//        TouchSensor limit = hardwareMap.get(TouchSensor.class, "limit");
         // DcMotor motor = hardwareMap.get(DcMotor.class, "Motor");
+
 
         telemetry.update();
         waitForStart();
@@ -189,6 +189,7 @@ public class NewAuto extends LinearOpMode {
         if(value > max){ value = max; }
         return value;
     }
+    //left to right A B C Low Mid High
     public void AUTONOMOUS_A(){
         telemetry.addLine("Autonomous A");
         autoMoves("A");
@@ -209,10 +210,63 @@ public class NewAuto extends LinearOpMode {
 
     //Where procedure is happening
     public void autoMoves(String position){
-        strafeRobot("left",1000,0.5);
+        TouchSensor limit = hardwareMap.get(TouchSensor.class, "limit");
+        strafeRobot("right",1350,0.5);
+
+        spinner.setPower(-1);
+        sleep(3000);
+        spinner.setPower(0);
+
+        driveRobot(0.5,800);
+
+        strafeRobot("right", 500,0.5);
+
+        driveRobot(0.5, 1000);
+
+        rotateToDegree(90);
+
+        driveRobot(-0.5,600);
+
+        armToLevel(position);
+
+        driveRobot(0.5,1600);
+
+        intake.setPower(-1);
+        sleep(3000);
+        intake.setPower(0);
+
+
+        driveRobot(-0.5,1700);
+
+        strafeRobot("left", 900,0.5);
+
+
+        while(!limit.isPressed()&&opModeIsActive()){
+            armMotor.setPower(0.5);
+        }
+        armMotor.setPower(0);
+
 
         sleep(10000);
         stop();
+    }
+
+    public void armToLevel(String position){
+        if(position.equals("A")){
+            armMotor.setPower(-0.5);
+            sleep(600);
+            armMotor.setPower(0);
+        }
+        if(position.equals("B")){
+            armMotor.setPower(-0.5);
+            sleep(1500);
+            armMotor.setPower(0);
+        }
+        if(position.equals("C")){
+            armMotor.setPower(-0.5);
+            sleep(2000);
+            armMotor.setPower(0);
+        }
     }
 
     public void rotateToDegree(double degree) {
@@ -281,20 +335,20 @@ public class NewAuto extends LinearOpMode {
 
     //pow 0.5: 0.4 m/s
     public void strafeRobot(String direction,
-                            long time, double speed){
+                            long time, double power){
         if (direction.equals("right")){
-            frontRightDrive.setPower(-speed);
-            rearRightDrive.setPower(speed);
-            frontLeftDrive.setPower(speed);
-            rearLeftDrive.setPower(-speed);
+            frontRightDrive.setPower(-power);
+            rearRightDrive.setPower(power);
+            frontLeftDrive.setPower(power);
+            rearLeftDrive.setPower(-power);
             sleep(time);
             breakRobot();
         }
         if (direction.equals("left")){
-            frontRightDrive.setPower(speed);
-            rearRightDrive.setPower(-speed);
-            frontLeftDrive.setPower(-speed);
-            rearLeftDrive.setPower(speed);
+            frontRightDrive.setPower(power);
+            rearRightDrive.setPower(-power);
+            frontLeftDrive.setPower(-power);
+            rearLeftDrive.setPower(power);
             sleep(time);
             breakRobot();
         }
