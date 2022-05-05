@@ -212,7 +212,7 @@ public class NewAuto_BlueTop extends LinearOpMode {
         //                                 distance / speed * 1000
         strafeRobot("right" , (long)(0.6/0.4*1000), 0.5);
 
-        armToLevel("A");
+        armToLevel(position);
 
         driveRobot(0.5, (long)(0.6/0.5*1000));
 
@@ -226,9 +226,9 @@ public class NewAuto_BlueTop extends LinearOpMode {
         sleep(500);
         armMotor.setPower(0);
 
-        strafeRobot("left", (long)(1.2/0.4*1000), 0.4 );
+        driveRobot(-0.5, 500);
 
-
+        strafeRobot("left", (long)(2/0.4*1000), 0.4 );
 
         sleep(10000);
         stop();
@@ -237,12 +237,12 @@ public class NewAuto_BlueTop extends LinearOpMode {
     public void armToLevel(String position){
         if(position.equals("A")){
             armMotor.setPower(-0.5);
-            sleep(2000);
+            sleep(500);
             armMotor.setPower(0);
         }
         if(position.equals("B")){
             armMotor.setPower(-0.5);
-            sleep(2000);
+            sleep(1100);
             armMotor.setPower(0);
         }
         if(position.equals("C")){
