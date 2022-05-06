@@ -24,7 +24,7 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 @Config //Disable if not using FTC Dashboard https://github.com/PinkToTheFuture/OpenCV_FreightFrenzy_2021-2022#opencv_freightfrenzy_2021-2022
 @Autonomous(name="NewAuto_BlueBot", group="Auto")
 
-public class NewAuto_BlueBot extends LinearOpMode {
+public class NewAuto_RedBot extends LinearOpMode {
 
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
@@ -213,22 +213,21 @@ public class NewAuto_BlueBot extends LinearOpMode {
         //Declare and Initiate a limit TouchSensor
         TouchSensor limit = hardwareMap.get(TouchSensor.class, "limit");
 
+        driveRobot(0.5,500);
 
-        strafeRobot("right",1200,0.5);
+        rotateToDegree(-90);
 
-        spinner.setPower(-1);
+        driveRobot(-0.5,1200);
+
+        strafeRobot("right", 300,0.5);
+        
+        spinner.setPower(1);
         sleep(3000);
         spinner.setPower(0);
 
-        driveRobot(0.5,800);
+        strafeRobot("left", 700,0.5);
 
-        strafeRobot("right", 500,0.5);
-
-        driveRobot(0.5, 750);
-
-        rotateToDegree(90);
-
-        driveRobot(-0.5,600);
+        driveRobot(-0.5, 200);
 
         armToLevel(position);
 
@@ -238,18 +237,15 @@ public class NewAuto_BlueBot extends LinearOpMode {
         sleep(3000);
         intake.setPower(0);
 
-
         driveRobot(-0.5,1700);
 
-        strafeRobot("left", 900,0.5);
-
+        strafeRobot("right", 900,0.5);
 
         //arm down
         while(!limit.isPressed()&&opModeIsActive()){
             armMotor.setPower(0.5);
         }
         armMotor.setPower(0);
-
 
         sleep(10000);
         stop();

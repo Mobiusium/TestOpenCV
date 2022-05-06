@@ -22,9 +22,9 @@ import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 
 @Config //Disable if not using FTC Dashboard https://github.com/PinkToTheFuture/OpenCV_FreightFrenzy_2021-2022#opencv_freightfrenzy_2021-2022
-@Autonomous(name="NewAuto_BlueBot", group="Auto")
+@Autonomous(name="NewAuto_RedTop", group="Auto")
 
-public class NewAuto_BlueBot extends LinearOpMode {
+public class NewAuto_RedTop extends LinearOpMode {
 
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
@@ -129,7 +129,6 @@ public class NewAuto_BlueBot extends LinearOpMode {
 //        TouchSensor limit = hardwareMap.get(TouchSensor.class, "limit");
         // DcMotor motor = hardwareMap.get(DcMotor.class, "Motor");
 
-
         telemetry.update();
         waitForStart();
 
@@ -212,44 +211,30 @@ public class NewAuto_BlueBot extends LinearOpMode {
     public void autoMoves(String position){
         //Declare and Initiate a limit TouchSensor
         TouchSensor limit = hardwareMap.get(TouchSensor.class, "limit");
-
-
-        strafeRobot("right",1200,0.5);
-
-        spinner.setPower(-1);
-        sleep(3000);
-        spinner.setPower(0);
-
-        driveRobot(0.5,800);
-
-        strafeRobot("right", 500,0.5);
-
-        driveRobot(0.5, 750);
-
-        rotateToDegree(90);
-
-        driveRobot(-0.5,600);
+        //                                 distance / speed * 1000
+        strafeRobot("left", 1500, 0.5);
 
         armToLevel(position);
 
-        driveRobot(0.5,1600);
+        driveRobot(0.5,1100);
 
         intake.setPower(-1);
         sleep(3000);
         intake.setPower(0);
 
+        driveRobot(-0.5,1500);
 
-        driveRobot(-0.5,1700);
+        armMotor.setPower(-0.5);
+        sleep(700);
+        armMotor.setPower(0);
 
-        strafeRobot("left", 900,0.5);
-
+        strafeRobot("right",4000, 0.5);
 
         //arm down
         while(!limit.isPressed()&&opModeIsActive()){
             armMotor.setPower(0.5);
         }
         armMotor.setPower(0);
-
 
         sleep(10000);
         stop();
@@ -312,7 +297,7 @@ public class NewAuto_BlueBot extends LinearOpMode {
             }
 
         }
-        breakRobot();
+        brakeRobot();
     }
 
     public void resetIMU(){
@@ -334,7 +319,7 @@ public class NewAuto_BlueBot extends LinearOpMode {
         frontRightDrive.setPower(power);
         rearRightDrive.setPower(power);
         sleep(time);
-        breakRobot();
+        brakeRobot();
     }
 
     //pow 0.5: 0.4 m/s
@@ -346,7 +331,7 @@ public class NewAuto_BlueBot extends LinearOpMode {
             frontLeftDrive.setPower(power);
             rearLeftDrive.setPower(-power);
             sleep(time);
-            breakRobot();
+            brakeRobot();
         }
         if (direction.equals("left")){
             frontRightDrive.setPower(power);
@@ -354,11 +339,11 @@ public class NewAuto_BlueBot extends LinearOpMode {
             frontLeftDrive.setPower(-power);
             rearLeftDrive.setPower(power);
             sleep(time);
-            breakRobot();
+            brakeRobot();
         }
     }
 
-    public void breakRobot() {
+    public void brakeRobot() {
         frontLeftDrive.setPower(0);
         rearLeftDrive.setPower(0);
         frontRightDrive.setPower(0);
@@ -366,8 +351,8 @@ public class NewAuto_BlueBot extends LinearOpMode {
         sleep(500);
     }
 
-    public double correction(double value, double inMin,
-                             double inMax, double outMin, double outMax) {
+    public double correction(double value, double inMin, double inMax,
+                             double outMin, double outMax) {
         return (value - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
     }
 
