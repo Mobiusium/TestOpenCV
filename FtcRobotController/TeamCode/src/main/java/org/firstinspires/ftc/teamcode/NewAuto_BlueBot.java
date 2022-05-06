@@ -224,7 +224,7 @@ public class NewAuto_BlueBot extends LinearOpMode {
 
         strafeRobot("right", 500,0.5);
 
-        driveRobot(0.5, 750);
+        driveRobot(0.5, 700);
 
         rotateToDegree(90);
 
@@ -258,17 +258,17 @@ public class NewAuto_BlueBot extends LinearOpMode {
     public void armToLevel(String position){
         if(position.equals("A")){
             armMotor.setPower(-0.5);
-            sleep(500);
+            sleep(600);
             armMotor.setPower(0);
         }
         if(position.equals("B")){
             armMotor.setPower(-0.5);
-            sleep(1200);
+            sleep(1100);
             armMotor.setPower(0);
         }
         if(position.equals("C")){
             armMotor.setPower(-0.5);
-            sleep(2000);
+            sleep(1700);
             armMotor.setPower(0);
         }
     }
