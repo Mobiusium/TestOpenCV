@@ -219,19 +219,19 @@ public class NewAuto_RedBot extends LinearOpMode {
 
         driveRobot(-0.5,1200);
 
-        strafeRobot("right", 100,0.5);
-        
-        spinner.setPower(1);
-        sleep(3000);
+        strafeRobot("right", 180,0.5);
+        //carousel
+        spinner.setPower(0.75);
+        sleep(3500);
         spinner.setPower(0);
 
-        strafeRobot("left", 1775,0.5);
+        strafeRobot("left", 1780,0.5);
 
         driveRobot(-0.5, 200);
 
         armToLevel(position);
 
-        driveRobot(0.5,1600);
+        driveRobot(0.5,1550);
 
         intake.setPower(-1);
         sleep(3000);
@@ -241,7 +241,7 @@ public class NewAuto_RedBot extends LinearOpMode {
 
         strafeRobot("right", 550,0.5);
 
-        
+
         //arm down
         while(!limit.isPressed()&&opModeIsActive()){
             armMotor.setPower(0.5);
@@ -260,7 +260,7 @@ public class NewAuto_RedBot extends LinearOpMode {
         }
         if(position.equals("B")){
             armMotor.setPower(-0.5);
-            sleep(1100);
+            sleep(1050);
             armMotor.setPower(0);
         }
         if(position.equals("C")){

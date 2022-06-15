@@ -214,10 +214,11 @@ public class NewAuto_BlueBot extends LinearOpMode {
         TouchSensor limit = hardwareMap.get(TouchSensor.class, "limit");
 
 
-        strafeRobot("right",1200,0.5);
+        strafeRobot("right",1300,0.5);
 
-        spinner.setPower(-1);
-        sleep(3000);
+//        carousel
+        spinner.setPower(-0.75);
+        sleep(3500);
         spinner.setPower(0);
 
         driveRobot(0.5,800);
@@ -232,10 +233,10 @@ public class NewAuto_BlueBot extends LinearOpMode {
 
         armToLevel(position);
 
-        driveRobot(0.5,1600);
+        driveRobot(0.5,1500);
 
         intake.setPower(-1);
-        sleep(3000);
+        sleep(3500);
         intake.setPower(0);
 
 
@@ -263,7 +264,7 @@ public class NewAuto_BlueBot extends LinearOpMode {
         }
         if(position.equals("B")){
             armMotor.setPower(-0.5);
-            sleep(1100);
+            sleep(1050);
             armMotor.setPower(0);
         }
         if(position.equals("C")){

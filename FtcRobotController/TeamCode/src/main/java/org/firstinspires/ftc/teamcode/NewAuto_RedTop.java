@@ -211,8 +211,11 @@ public class NewAuto_RedTop extends LinearOpMode {
     public void autoMoves(String position){
         //Declare and Initiate a limit TouchSensor
         TouchSensor limit = hardwareMap.get(TouchSensor.class, "limit");
-        //                                 distance / speed * 1000
-        strafeRobot("left", 1100, 0.5);
+        //distance / speed * 1000
+        telemetry.addData("10s waiting for running", getRuntime());
+        telemetry.update();
+        sleep(10000);
+        strafeRobot("left", 1080, 0.5);
 
         armToLevel(position);
 
@@ -248,7 +251,7 @@ public class NewAuto_RedTop extends LinearOpMode {
         }
         if(position.equals("B")){
             armMotor.setPower(-0.5);
-            sleep(1100);
+            sleep(1050);
             armMotor.setPower(0);
         }
         if(position.equals("C")){
